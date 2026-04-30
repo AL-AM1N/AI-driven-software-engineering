@@ -1,6 +1,7 @@
 //? Topic: array , object
 //! new topic: touple
 
+// -------------------------------------------------------------------
 // array example:
 let shoppingList: string[] = ["shirt", "pant", "panjabi", "pajama"];
 
