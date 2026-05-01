@@ -18,7 +18,8 @@ const myFirstName = user.name.firstName; //! without destructuring
 
 
 // with destructuring:
-const { id, name: {lastName}, gender, favouriteColor: myColor } = user;
+const { id, name: {lastName}, gender, favouriteColor: myColor } = user;  //! here "favouriteColor: myColor" is called "name alias"
+
 
 console.log(lastName,": My favourite color is", myColor);
 
