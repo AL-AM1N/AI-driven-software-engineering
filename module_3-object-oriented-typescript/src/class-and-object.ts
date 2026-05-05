@@ -1,4 +1,4 @@
-//? Object Oriented Programming - class, object and method (normal way)
+//? 3-1 Object Oriented Programming - class, object and method (normal way)
 // ? class, object and method with "parameter property"
 
 /**
