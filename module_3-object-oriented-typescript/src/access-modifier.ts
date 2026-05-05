@@ -3,6 +3,8 @@
  * !Note:
  * 1. private: private keyword use korle amra shudhu oi class er moddhei variable ta use korte parbo
  * 2. protected: jokhon amra kono instance banabo, and shekhane amader private variable take use korte hobe tokhon amra shetake "private" keyword na likhe "protected" keyword likhbo 
+ * 
+ * 3. etake "encapsulation" o bola hoy
  */
 
 //--------------------------------------------------------
