@@ -2,6 +2,10 @@
 
 /**
  * !Note: inheritance holo babar property chele pawa
+ * 
+ * 2nd piller: Polymorphism
+ * 3rd piller: abstraction
+ * 4th piller: Encapsulation
  */
 
 //-------------------------------------------------------------
