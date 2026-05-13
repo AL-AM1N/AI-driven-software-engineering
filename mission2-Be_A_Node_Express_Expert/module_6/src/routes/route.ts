@@ -3,14 +3,14 @@ import { readProduct } from "../service/product.service";
 
 export const routeHandler = (req: IncomingMessage, res: ServerResponse) => {
   // console.log(req.url); // '/', '/user', '/products'
-  // console.log(req.method); // "GET" , "POST" , "Delete"
+  // console.log(req.method); // "GET" , "POST" , "Delete" , "PUT"
 
   const url = req.url;
   const method = req.method;
 
   // console.log(req.url);
   // console.log(req.method);
-  
+
   if (url === "/" && method === "GET") {
     // console.log("This is Root route");
 
