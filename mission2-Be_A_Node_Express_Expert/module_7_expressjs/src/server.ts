@@ -119,7 +119,53 @@ app.get("/api/users/:id", async (req: Request, res: Response) => {
       message: "User retrived successfully!",
       data: result.rows[0],
     });
-    
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
+});
+
+// update user
+app.put("/api/users/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { name, password, age, is_active } = req.body;
+
+  // console.log(id);
+  // console.log({name, password, age, is_active});
+
+  try {
+    const result = await pool.query(
+      // // UPDATE users SET name=$1, password=$2, age=$3, is_active=$4
+      //* amra shob shomoy shob value update nao korte pari, jei value gula amra update korbo na shegula by default "null" value kore pathay, so amra jodi chai jegula value update korbo na shegula jemon ase omon thakbe tahole amader "COALESCE" use korte hobe
+      `
+          UPDATE users 
+    SET 
+    name=COALESCE($1,name),
+    password=COALESCE($2,password),
+    age=COALESCE($3,age),
+    is_active=COALESCE($4,is_active)
+        WHERE id=$5 RETURNING *
+      `,
+      [name, password, age, is_active, id],
+    );
+
+    if (result.rows.length === 0) {
+      res.status(404).json({
+        success: false,
+        message: "User Not found!",
+        data: {},
+      });
+    }
+
+    // console.log(result);
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully!",
+      data: result.rows[0],
+    });
   } catch (error: any) {
     res.status(500).json({
       success: false,
