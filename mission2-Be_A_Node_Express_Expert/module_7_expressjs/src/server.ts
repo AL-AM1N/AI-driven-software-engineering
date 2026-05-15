@@ -4,9 +4,10 @@ import express, {
   type Response,
 } from "express";
 import { Pool } from "pg";
+import config from "./config/env";
 
 const app: Application = express();
-const port = 5000;
+const port = config.port;
 
 // middleware: (amra middleware use kori jate server a client theke data ta ashe)
 app.use(express.json());
@@ -14,8 +15,7 @@ app.use(express.text());
 app.use(express.urlencoded());
 
 const pool = new Pool({
-  connectionString:
-    "postgresql://neondb_owner:npg_ZAPsY2CW7Qjk@ep-dawn-night-aqpclnuw.c-8.us-east-1.aws.neon.tech/neondb?sslmode=require",
+  connectionString: config.connection_string,
 });
 
 const initDB = async () => {
