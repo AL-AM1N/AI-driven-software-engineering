@@ -49,6 +49,8 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
+
+//* create a new user
 app.post("/api/users", async (req: Request, res: Response) => {
   const { name, email, password, age } = req.body;
 
@@ -76,6 +78,7 @@ app.post("/api/users", async (req: Request, res: Response) => {
   }
 });
 
+//* get all user info
 app.get("/api/users", async (req: Request, res: Response) => {
   try {
     const result = await pool.query(`
@@ -95,6 +98,7 @@ app.get("/api/users", async (req: Request, res: Response) => {
   }
 });
 
+//* get single user info
 app.get("/api/users/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
@@ -128,7 +132,7 @@ app.get("/api/users/:id", async (req: Request, res: Response) => {
   }
 });
 
-// update user
+//* update user api
 app.put("/api/users/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, password, age, is_active } = req.body;
@@ -165,6 +169,40 @@ app.put("/api/users/:id", async (req: Request, res: Response) => {
       success: true,
       message: "User updated successfully!",
       data: result.rows[0],
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
+});
+
+
+//* delete single user info api
+app.delete("/api/users/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      `
+    DELETE FROM users WHERE id=$1  
+      `,
+      [id],
+    );
+
+    console.log(result);
+    if (result.rowCount === 0) {
+      res.status(404).json({
+        success: false,
+        message: "User Not found!",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "User deleted successfully!",
+      data: {},
     });
   } catch (error: any) {
     res.status(500).json({
