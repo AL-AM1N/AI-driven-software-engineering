@@ -16,6 +16,9 @@ route.get("/:id", userController.getSingleUser);
 //* update user api
 route.put("/:id", userController.updateUser);
 
+//* delete single user info api
+route.delete("/:id", userController.deleteUser);
+
 
 
 export const userRouter = route;
