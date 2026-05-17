@@ -13,5 +13,9 @@ route.get("/", userController.getAllUsers);
 //* get single user info
 route.get("/:id", userController.getSingleUser);
 
+//* update user api
+route.put("/:id", userController.updateUser);
+
+
 
 export const userRouter = route;

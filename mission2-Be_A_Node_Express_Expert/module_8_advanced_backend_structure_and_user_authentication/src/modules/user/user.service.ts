@@ -32,9 +32,29 @@ const getSingleUserFromDB = async (id: string) => {
     return result;
 }
 
+const updateUserFromDB = async (payload: IUser, id: string) => {
+  const {name, password, age, is_active} = payload;
+  const result = await pool.query(
+      // // UPDATE users SET name=$1, password=$2, age=$3, is_active=$4
+      //* amra shob shomoy shob value update nao korte pari, jei value gula amra update korbo na shegula by default "null" value kore pathay, so amra jodi chai jegula value update korbo na shegula jemon ase omon thakbe tahole amader "COALESCE" use korte hobe
+      `
+          UPDATE users 
+    SET 
+    name=COALESCE($1,name),
+    password=COALESCE($2,password),
+    age=COALESCE($3,age),
+    is_active=COALESCE($4,is_active)
+        WHERE id=$5 RETURNING *
+      `,
+      [name, password, age, is_active, id],
+    );
+
+    return result;
+}
+
 export const userService = {
   createUserIntoDB,
   getAllUsersFromDB,
   getSingleUserFromDB,
-  
+  updateUserFromDB,
 };
