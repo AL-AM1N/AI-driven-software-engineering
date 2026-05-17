@@ -10,5 +10,8 @@ route.post("/", userController.createUser);
 //* get all user info
 route.get("/", userController.getAllUsers);
 
+//* get single user info
+route.get("/:id", userController.getSingleUser);
+
 
 export const userRouter = route;
