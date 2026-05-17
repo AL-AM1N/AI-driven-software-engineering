@@ -5,10 +5,11 @@ import express, {
 } from "express";
 
 import config from "./config/env";
-import { pool } from "./db";
 import { userRouter } from "./modules/user/user.route";
 import { profileRouter } from "./modules/profile/profile.route";
 import { authRouter } from "./modules/auth/auth.route";
+import logger from "./middleware/logger";
+import auth from "./middleware/auth";
 
 const app: Application = express();
 const port = config.port;
@@ -17,6 +18,8 @@ const port = config.port;
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded());
+app.use(logger);
+app.use(auth());
 
 app.get("/", (req: Request, res: Response) => {
   //res.send("Hello world!")
