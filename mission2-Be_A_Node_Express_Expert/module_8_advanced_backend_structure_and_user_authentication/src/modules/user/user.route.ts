@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from "express";
 import { pool } from "../../db";
-import { userController } from "./user.controler";
+import { userController } from "./user.controller";
 
 const route = Router();
 
