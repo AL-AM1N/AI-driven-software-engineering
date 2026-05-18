@@ -7,7 +7,7 @@ const createUserIntoDB = async (payload: IUser) => {
 
     const hashPassword = await bcrypt.hash(password, 10);
 
-    console.log(hashPassword);
+    // console.log(hashPassword);
 
   const result = await pool.query(
     `
