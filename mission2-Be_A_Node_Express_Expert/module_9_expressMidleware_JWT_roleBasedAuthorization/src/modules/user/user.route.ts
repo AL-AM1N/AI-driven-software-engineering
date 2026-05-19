@@ -2,6 +2,7 @@ import { Router, type Request, type Response } from "express";
 import { pool } from "../../db";
 import { userController } from "./user.controller";
 import auth from "../../middleware/auth";
+import { USER_ROLE } from "../../types";
 
 const route = Router();
 
@@ -9,7 +10,7 @@ const route = Router();
 route.post("/", userController.createUser);
 
 //* get all user info
-route.get("/", auth(), userController.getAllUsers);
+route.get("/", auth(USER_ROLE.admin, USER_ROLE.agent), userController.getAllUsers);
 
 //* get single user info
 route.get("/:id", userController.getSingleUser);

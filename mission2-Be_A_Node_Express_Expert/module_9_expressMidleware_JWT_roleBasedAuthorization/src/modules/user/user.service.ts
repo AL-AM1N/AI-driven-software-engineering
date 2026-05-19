@@ -3,17 +3,17 @@ import { pool } from "../../db";
 import type { IUser } from "./user.interface";
 
 const createUserIntoDB = async (payload: IUser) => {
-  const { name, email, password, age } = payload;
+  const { name, email, password, age, role } = payload;
 
-    const hashPassword = await bcrypt.hash(password, 10);
+  const hashPassword = await bcrypt.hash(password, 10);
 
-    // console.log(hashPassword);
+  // console.log(hashPassword);
 
   const result = await pool.query(
     `
-     INSERT INTO users(name,email,password,age) VALUES($1,$2,$3,$4) RETURNING *
+     INSERT INTO users(name,email,password,age, role) VALUES($1,$2,$3,$4, COALESCE($5, 'user')) RETURNING *  
     `,
-    [name, email, hashPassword, age],
+    [name, email, hashPassword, age, role],
   );
 
   // password is a sensitive data, so don't want to show this data, when we returning the data we delete the password from the object
@@ -27,25 +27,25 @@ const getAllUsersFromDB = async () => {
            SELECT * FROM users  
             `);
 
-            return result;
+  return result;
 };
 
 const getSingleUserFromDB = async (id: string) => {
   const result = await pool.query(
-      `
+    `
        SELECT * FROM users WHERE id=$1  
         `,
-      [id],
-    );
-    return result;
-}
+    [id],
+  );
+  return result;
+};
 
 const updateUserFromDB = async (payload: IUser, id: string) => {
-  const {name, password, age, is_active} = payload;
+  const { name, password, age, is_active } = payload;
   const result = await pool.query(
-      // // UPDATE users SET name=$1, password=$2, age=$3, is_active=$4
-      //* amra shob shomoy shob value update nao korte pari, jei value gula amra update korbo na shegula by default "null" value kore pathay, so amra jodi chai jegula value update korbo na shegula jemon ase omon thakbe tahole amader "COALESCE" use korte hobe
-      `
+    // // UPDATE users SET name=$1, password=$2, age=$3, is_active=$4
+    //* amra shob shomoy shob value update nao korte pari, jei value gula amra update korbo na shegula by default "null" value kore pathay, so amra jodi chai jegula value update korbo na shegula jemon ase omon thakbe tahole amader "COALESCE" use korte hobe
+    `
           UPDATE users 
     SET 
     name=COALESCE($1,name),
@@ -54,21 +54,21 @@ const updateUserFromDB = async (payload: IUser, id: string) => {
     is_active=COALESCE($4,is_active)
         WHERE id=$5 RETURNING *
       `,
-      [name, password, age, is_active, id],
-    );
+    [name, password, age, is_active, id],
+  );
 
-    return result;
-}
+  return result;
+};
 
-const deleteUserFromDB = async(id: string) => {
+const deleteUserFromDB = async (id: string) => {
   const result = await pool.query(
-      `
+    `
     DELETE FROM users WHERE id=$1  
       `,
-      [id],
-    );
-    return result;
-}
+    [id],
+  );
+  return result;
+};
 
 export const userService = {
   createUserIntoDB,
