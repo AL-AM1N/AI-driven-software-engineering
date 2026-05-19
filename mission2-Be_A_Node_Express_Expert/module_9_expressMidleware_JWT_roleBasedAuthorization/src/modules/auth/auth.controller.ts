@@ -4,9 +4,40 @@ import { authService } from "./auth.service";
 const loginUser = async (req: Request, res: Response) => {
   try {
     const result = await authService.loginUserIntoDB(req.body);
+
+    const { refreshToken } = result;
+
+    res.cookie("refreshToken", refreshToken, {
+      secure: false, // In production => it will be true
+      httpOnly: true, // eita true thakle amra browser a javascript diye access korte parbo na
+      sameSite: "lax",
+    });
+
     res.status(200).json({
       success: true,
-      message: "User retrived successfully!",
+      message: "User login successfully!",
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
+};
+
+const refreshToken = async (req: Request, res: Response) => {
+  // console.log("refreshToken from auth controller", req.cookies);
+
+  try {
+    const result = await authService.generateRefreshToken(
+      req.cookies.refreshToken,
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Access token generated",
       data: result,
     });
   } catch (error: any) {
@@ -19,5 +50,6 @@ const loginUser = async (req: Request, res: Response) => {
 };
 
 export const authController = {
-    loginUser,
-}
+  loginUser,
+  refreshToken,
+};

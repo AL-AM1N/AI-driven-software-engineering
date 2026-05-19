@@ -9,17 +9,18 @@ import { userRouter } from "./modules/user/user.route";
 import { profileRouter } from "./modules/profile/profile.route";
 import { authRouter } from "./modules/auth/auth.route";
 import logger from "./middleware/logger";
-import auth from "./middleware/auth";
+import CookieParser from "cookie-parser"; // we should install: npm i --save-dev @types/cookie-parser
+
 
 const app: Application = express();
 const port = config.port;
 
 // middleware: (amra middleware use kori jate server a client theke data ta ashe)
+app.use(CookieParser())
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded());
 app.use(logger);
-app.use(auth());
 
 app.get("/", (req: Request, res: Response) => {
   //res.send("Hello world!")
