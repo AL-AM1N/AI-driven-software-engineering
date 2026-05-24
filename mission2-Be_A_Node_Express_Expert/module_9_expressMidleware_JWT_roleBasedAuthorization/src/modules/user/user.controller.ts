@@ -2,6 +2,8 @@ import type { Request, Response } from "express";
 import { userService } from "./user.service";
 import sendResponse from "../../utility/sendResponse";
 
+
+//* create user 
 const createUser = async (req: Request, res: Response) => {
   // const { name, email, password, age } = req.body;
 
@@ -25,6 +27,7 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
+//* get all user from db
 const getAllUsers = async (req: Request, res: Response) => {
   console.log("From user controller", req.user);
   try {
@@ -43,6 +46,8 @@ const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
+
+//* get single user 
 const getSingleUser = async (req: Request, res: Response) => {
   const { id } = req.params;
 
@@ -71,6 +76,8 @@ const getSingleUser = async (req: Request, res: Response) => {
   }
 };
 
+
+//* update user 
 const updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   // const { name, password, age, is_active } = req.body;
@@ -104,6 +111,8 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
+
+//* delete user from db
 const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
