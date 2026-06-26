@@ -16,5 +16,5 @@
     "skipDefaultLibCheck": true
   },
   // "include": ["src/**/*"],
-  "exclude": ["node_ modules", "dist", "generated/prisma"]
+  "exclude": ["node_ modules", "dist"]
 }
