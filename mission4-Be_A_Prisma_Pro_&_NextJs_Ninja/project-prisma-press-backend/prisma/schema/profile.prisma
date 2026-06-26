@@ -1,7 +1,7 @@
 model Profile {
     id String @id @default(uuid())
-    profilePhoto String 
-    bio String
+    profilePhoto String? 
+    bio String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
