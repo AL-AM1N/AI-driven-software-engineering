@@ -14,9 +14,7 @@ const loginUser = catchAsync(async(req: Request, res: Response, next: NextFuncti
         success: true,
         statusCode: httpStatus.OK,
         message: "User logged in successfully",
-        data: {
-            loginResult
-        }
+        data: loginResult
     })
 
 })
