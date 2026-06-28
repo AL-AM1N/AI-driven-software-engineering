@@ -74,18 +74,38 @@ const getMyProfile = catchAsync(
     //   throw new Error(verifiedToken);
     // }
 
-    const profile = await userService.getMyProfileFromDB(req.user?.id as string);
- 
+    const profile = await userService.getMyProfileFromDB(
+      req.user?.id as string,
+    );
+
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
       message: "User profile fetched successfully",
-      data: {profile}
-    })
-  });
+      data: { profile },
+    });
+  },
+);
 
+const updateMyProfile = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user?.id as string;
+
+  const payload = req.body;
+
+  console.log(payload);
+
+  const updatedProfile = await userService.updateMyProfileInDB(userId, payload);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "User profile updated successfully",
+    data: { updatedProfile },
+  });
+});
 
 export const userController = {
   registerUser,
   getMyProfile,
+  updateMyProfile,
 };
