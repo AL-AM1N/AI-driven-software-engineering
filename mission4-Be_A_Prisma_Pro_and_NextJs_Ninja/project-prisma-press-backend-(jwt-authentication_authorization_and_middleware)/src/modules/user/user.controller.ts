@@ -59,21 +59,22 @@ const registerUser = catchAsync(
 
 const getMyProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { accessToken } = req.cookies;
-    console.log(accessToken);
+    //! ei part tuku amra auth middleware er moddhei check korechi
+    // const { accessToken } = req.cookies;
+    // console.log(accessToken);
 
-    const verifiedToken = jwtUtils.verifyToken(
-      accessToken,
-      config.jwt_access_secret,
-    );
+    // const verifiedToken = jwtUtils.verifyToken(
+    //   accessToken,
+    //   config.jwt_access_secret,
+    // );
 
-     console.log(verifiedToken);
+    //  console.log(verifiedToken);
 
-    if (typeof verifiedToken === "string") {
-      throw new Error(verifiedToken);
-    }
+    // if (typeof verifiedToken === "string") {
+    //   throw new Error(verifiedToken);
+    // }
 
-    const profile = await userService.getMyProfileFromDB(verifiedToken.id);
+    const profile = await userService.getMyProfileFromDB(req.user?.id as string);
  
     sendResponse(res, {
       success: true,
