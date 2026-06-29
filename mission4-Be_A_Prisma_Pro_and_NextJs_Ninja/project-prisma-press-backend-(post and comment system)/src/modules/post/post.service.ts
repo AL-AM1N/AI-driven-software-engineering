@@ -26,7 +26,38 @@ const getAllPosts = async () => {
     return posts;
 }
 
+const getPostById = async (postId: string) => {
+  const post = await prisma.post.findUniqueOrThrow({
+    where: {
+      id: postId
+    }
+  })
+
+  //* joto bar amra post take dekhbo, toto bar "views" 1 kore barbe, youtube er moto
+  const updatedPost = await prisma.post.update({
+    where: {
+      id: postId
+    },
+    data :{
+      views: {
+        increment: 1
+      }
+    },
+    include: {
+      author: {
+        omit: {
+          password: true
+        }
+      },
+      comments: true
+    }
+  })
+
+  return updatedPost;
+}
+
 export const postService = {
   createPost,
-  getAllPosts
+  getAllPosts,
+  getPostById
 };

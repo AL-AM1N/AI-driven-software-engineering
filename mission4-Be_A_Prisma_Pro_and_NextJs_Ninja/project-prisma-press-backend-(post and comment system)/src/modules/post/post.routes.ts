@@ -9,4 +9,7 @@ router.post("/", auth(Role.ADMIN, Role.AUTHOR, Role.USER), postController.creteP
 
 router.get("/", postController.getAllPosts);
 
+router.get("/:postId", postController.getPostById);
+
+
 export const postRoutes = router;
