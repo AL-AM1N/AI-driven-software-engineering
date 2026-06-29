@@ -33,25 +33,43 @@ const getAllPosts = catchAsync(
   },
 );
 
-const getPostById = catchAsync(async(req : Request, res : Response, next : NextFunction) => {
-  const postId = req.params.postId;
+const getPostById = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const postId = req.params.postId;
 
-      if(!postId){
-        throw new Error("Post Id Required In Params")
+    if (!postId) {
+      throw new Error("Post Id Required In Params");
     }
 
     const result = await postService.getPostById(postId as string);
 
     sendResponse(res, {
-        success : true,
-        statusCode : httpStatus.OK,
-        message : "Post retrieved successfuly",
-        data : result
-    })
-})
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Post retrieved successfuly",
+      data: result,
+    });
+  },
+);
+
+const getMyPosts = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const authorId = req.user?.id;
+
+    const result = await postService.getMyPosts(authorId as string);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "My Posts retrieved successfuly",
+      data: result,
+    });
+  },
+);
 
 export const postController = {
   cretePost,
   getAllPosts,
-  getPostById
+  getPostById,
+  getMyPosts
 };
