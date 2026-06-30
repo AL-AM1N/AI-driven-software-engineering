@@ -14,6 +14,107 @@ const createPost = async (payload: ICreatePostPayload, userId: string) => {
 
 const getAllPosts = async () => {
   const posts = await prisma.post.findMany({
+
+     // filtering / exact match without AND Operator
+
+            // where : {
+            //     title: "My Fourth Post",
+            //     content : "Ronaldo"
+            // },
+
+
+            // filtering / exact match with AND Operator
+
+            // where : {
+            //     AND : [
+            //         {
+            //             title: "My Fourth Post",
+            //         },
+            //         {
+            //             content: "Ronaldo"
+            //         },
+            //         {
+            //             tags : {
+                            
+            //             }
+            //         }
+            //     ]
+            // },
+
+            // searching / partial match
+
+            // where : {
+            //     title : {
+            //         contains : "ronaLdo",
+            //         mode : "insensitive"
+            //     },
+
+            //     // X -> Not ideal for partial match
+            //     // content : {
+            //     //     contains : "Ronaldo"
+            //     // }
+            // },
+
+            // searching / partial search with OR operator
+
+            // where : {
+            //     OR : [
+            //         {
+            //             title : {
+            //                 contains : "Ron",
+            //                 mode : "insensitive"
+            //             },
+                       
+            //         },
+
+
+            //         {
+            //             content : {
+            //                 contains : "Ro",
+            //                 mode : "insensitive"
+            //             }
+            //         }
+            //     ]
+            // },
+
+
+            // combining search (OR Operator) and filtering (AND)
+
+            // where : {
+            //     //filtering & searching combined
+            //     AND : [
+            //         {
+            //             // searching
+            //             OR : [
+            //                 {
+            //                     title : {
+            //                         contains : "Ron",
+            //                         mode : "insensitive"
+            //                     }
+            //                 },
+
+            //                 {
+            //                     content : {
+            //                         contains : "Ron",
+            //                         mode : "insensitive"
+            //                     }
+                                
+            //                 }
+            //             ]
+            //         },
+
+            //         // filtering
+            //         {
+            //             title : "Ronaldo Nazario"
+            //         },
+
+            //         {
+            //             content : "Ronaldo"
+            //         }
+            //     ]
+            // },
+
+
     include: {
       author: {
         omit: {
